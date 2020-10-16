@@ -9,7 +9,7 @@ defmodule SimpleChat.Domain.Model.Chat do
 
   @chat_users_servise ChatUsersService
 
-  @spec new(any) :: __MODULE__.t()
+  @spec new(String.t()) :: __MODULE__.t()
   def new(name), do: %__MODULE__{name: name, id: generate_id()}
 
   @spec get_users(__MODULE__.t()) :: []
