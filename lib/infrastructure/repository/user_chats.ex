@@ -10,7 +10,7 @@ defmodule SimpleChat.Infrastructure.Repository.UserChats do
     with {:ok, _user} <- User.get(login),
          true <-
            :ets.lookup(@table, login)
-           |> add_chat_for_user(login, chat_id) do
+           |> add_chat_to_user(login, chat_id) do
       :ok
     end
   end
@@ -31,11 +31,11 @@ defmodule SimpleChat.Infrastructure.Repository.UserChats do
     :ets.lookup(@table, login) |> result_or_error()
   end
 
-  defp add_chat_for_user([], login, chat_id) do
+  defp add_chat_to_user([], login, chat_id) do
     :ets.insert(@table, {login, [chat_id]})
   end
 
-  defp add_chat_for_user([{_, chats}], login, chat_id) do
+  defp add_chat_to_user([{_, chats}], login, chat_id) do
     :ets.insert(@table, {login, [chat_id | chats]})
   end
 end
