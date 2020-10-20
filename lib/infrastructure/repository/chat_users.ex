@@ -6,11 +6,11 @@ defmodule SimpleChat.Infrastructure.Repository.ChatUsers do
   alias SimpleChat.Infrastructure.Repository.Chat
 
   @spec add_user(binary(), User.t()) :: :ok | {:error, :not_found}
-  def add_user(chat_id, %User{} = user) do
+  def add_user(chat_id, %User{login: login}) do
     with {:ok, _chat} <- Chat.get(chat_id),
          true <-
            :ets.lookup(@table, chat_id)
-           |> add_user_to_chat(chat_id, user) do
+           |> add_user_to_chat(chat_id, login) do
       :ok
     end
   end
@@ -20,10 +20,7 @@ defmodule SimpleChat.Infrastructure.Repository.ChatUsers do
     case get(chat_id) do
       {:ok, users} ->
         new_users =
-          Enum.filter(users, fn
-            %User{login: ^login} -> false
-            _ -> true
-          end)
+          Enum.filter(users, &(&1 != login))
 
         :ets.insert(@table, {chat_id, new_users})
     end
@@ -34,11 +31,11 @@ defmodule SimpleChat.Infrastructure.Repository.ChatUsers do
     :ets.lookup(@table, chat_id) |> result_or_error()
   end
 
-  defp add_user_to_chat([], chat_id, user) do
-    :ets.insert(@table, {chat_id, [user]})
+  defp add_user_to_chat([], chat_id, user_login) do
+    :ets.insert(@table, {chat_id, [user_login]})
   end
 
-  defp add_user_to_chat([{_, users}], chat_id, user) do
-    :ets.insert(@table, {chat_id, [user | users]})
+  defp add_user_to_chat([{_, users}], chat_id, user_login) do
+    :ets.insert(@table, {chat_id, [user_login| users]})
   end
 end
