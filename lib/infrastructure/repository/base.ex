@@ -3,7 +3,7 @@ defmodule SimpleChat.Infrastructure.Repository.Base do
   def result_or_error(result) do
     case result do
       [] -> {:error, :not_found}
-      [{_, user}] -> {:ok, user}
+      [{_, result}] -> {:ok, result}
     end
   end
 end
