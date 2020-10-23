@@ -1,9 +1,9 @@
 defmodule SimpleChat.Infrastructure.Repository.UserChats do
-  @table :user_chats
-
   import SimpleChat.Infrastructure.Repository.Base
   alias SimpleChat.Domain.Model.User, as: UserModel
   alias SimpleChat.Infrastructure.Repository.User
+
+  @table user_chats_table()
 
   @spec add_chat(UserModel.t(), binary()) :: :ok | {:error, :not_found}
   def add_chat(%UserModel{login: login}, chat_id) do

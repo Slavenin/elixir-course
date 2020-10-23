@@ -1,8 +1,8 @@
 defmodule SimpleChat.Infrastructure.Repository.User do
-  @table :users
-
   import SimpleChat.Infrastructure.Repository.Base
   alias SimpleChat.Domain.Model.User
+
+  @table users_table()
 
   @spec get(String.t()) :: {:error, atom()} | {:ok, User.t()}
   def get(login) do

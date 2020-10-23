@@ -1,8 +1,8 @@
 defmodule SimpleChat.Infrastructure.Repository.Chat do
-  @table :chats
-
   import SimpleChat.Infrastructure.Repository.Base
   alias SimpleChat.Domain.Model.Chat
+
+  @table chats_table()
 
   @spec get(String.t()) :: {:error, :not_found} | {:ok, Chat.t()}
   def get(id) do

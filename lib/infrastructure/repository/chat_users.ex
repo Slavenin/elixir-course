@@ -1,5 +1,8 @@
 defmodule SimpleChat.Infrastructure.Repository.ChatUsers do
-  @table :chat_users
+
+  import SimpleChat.Infrastructure.Repository.Base, only: [chat_users_table: 0]
+
+  @table chat_users_table()
 
   import SimpleChat.Infrastructure.Repository.Base
   alias SimpleChat.Domain.Model.User
