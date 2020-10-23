@@ -26,7 +26,7 @@ defmodule SimpleChat.Infrastructure.Repository.UserChats do
     end
   end
 
-  @spec get(binary()) :: {:error, :not_found} | {:ok, [User.t(), ...]}
+  @spec get(binary()) :: {:error, :not_found} | {:ok, [Chat.t(), ...]}
   def get(login) do
     :ets.lookup(@table, login) |> result_or_error()
   end

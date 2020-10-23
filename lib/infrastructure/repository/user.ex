@@ -23,5 +23,5 @@ defmodule SimpleChat.Infrastructure.Repository.User do
   end
 
   @spec delete(String.t()) :: true
-  def delete(id), do: :ets.delete(@table, id)
+  def delete(login), do: :ets.delete(@table, login)
 end

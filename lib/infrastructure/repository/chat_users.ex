@@ -5,8 +5,8 @@ defmodule SimpleChat.Infrastructure.Repository.ChatUsers do
   alias SimpleChat.Domain.Model.User
   alias SimpleChat.Infrastructure.Repository.Chat
 
-  @spec add_user(binary(), User.t()) :: :ok | {:error, :not_found}
-  def add_user(chat_id, %User{login: login}) do
+  @spec add_user(User.t(), binary()) :: :ok | {:error, :not_found}
+  def add_user(%User{login: login}, chat_id) do
     with {:ok, _chat} <- Chat.get(chat_id),
          true <-
            :ets.lookup(@table, chat_id)
@@ -15,8 +15,8 @@ defmodule SimpleChat.Infrastructure.Repository.ChatUsers do
     end
   end
 
-  @spec remove_user(binary(), User.t()) :: true
-  def remove_user(chat_id, %User{login: login}) do
+  @spec remove_user(User.t(), binary()) :: true
+  def remove_user(%User{login: login}, chat_id) do
     case get(chat_id) do
       {:ok, users} ->
         new_users =
