@@ -15,6 +15,7 @@ defmodule SimpleChat.Domain.Service.Chat do
   @spec delete(ChatModel.t()) :: true
   def delete(%ChatModel{id: id}), do: ChatRepo.delete(id)
 
+  @spec send_message_to_users(binary(), binary(), binary()) :: :ok | {:error, :not_found}
   def send_message_to_users(message, chat_id, user_login) do
     with {:ok, chat} <- ChatRepo.get(chat_id),
          {:ok, user_from} <- UserRepo.get(user_login),

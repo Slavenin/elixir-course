@@ -4,9 +4,7 @@ defmodule SimpleChat do
   import SimpleChat.Infrastructure.Repository.Base,
     only: [chat_users_table: 0, chats_table: 0, user_chats_table: 0, users_table: 0]
 
-  alias SimpleChat.Domain.Service.Chat, as: ChatService
-  alias SimpleChat.Domain.Service.User, as: UserService
-  alias SimpleChat.Domain.Model.Chat, as: ChatModel
+  alias SimpleChat.Domain.Service.Message, as: MessageService
 
   @tables [
     chat_users_table(),
@@ -25,20 +23,7 @@ defmodule SimpleChat do
   @spec loop :: no_return
   def loop() do
     receive do
-      {:new_chat, name} ->
-        ChatService.add(name)
-
-      {:new_user, login} ->
-        UserService.add(login)
-
-      {:send_message_to_chat, mesasge, chat_id, user_login} ->
-        ChatService.send_message_to_users(mesasge, chat_id, user_login)
-
-      {:join_chat, user_login, chat_id} ->
-        ChatModel.join_chat(user_login, chat_id)
-
-      {:leave_chat, user_login, chat_id} ->
-        ChatModel.leave_chat(user_login, chat_id)
+      msg -> MessageService.handle_message(msg)
     end
 
     loop()
