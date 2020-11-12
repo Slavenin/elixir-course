@@ -3,7 +3,7 @@ defmodule SimpleChat.Domain.Service.Chat do
   alias SimpleChat.Infrastructure.Repository.Chat, as: ChatRepo
   alias SimpleChat.Infrastructure.Repository.User, as: UserRepo
   alias SimpleChat.Infrastructure.Repository.ChatUsers, as: ChatUsersRepo
-  alias SimpleChat.Domain.Service.Message, as: MessageService
+  alias SimpleChat.Infrastructure.Service.Message, as: MessageService
 
   @spec add(binary()) :: true
   def add(name) do
